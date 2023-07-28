@@ -1,4 +1,4 @@
-Vue-fastapi-CRUD-PostgreSQL
+# Vue-fastapi-CRUD-PostgreSQL
 
 This project is a CRUD application built using FastAPI and Vue.js, where users
 can manage notes and perform basic operations like creating, reading, updating,
