@@ -7,7 +7,9 @@ services:
     ports:
       - 5000:5000
     environment:
-      - DATABASE_URL=postgres://hello_fastapi:hello_fastapi@db:5432/hello_fastapi_dev
+      - PORT=5000
+      - DATABASE_URL=postgres://hello_fastapi:2UbGuBJjOBp4e8oZPC3UzLyggKjaDDh3@dpg-cj9i5uivvtos73ei5ng0-a.oregon-postgres.render.com/hello_fastapi
+      # - DATABASE_URL=postgres://hello_fastapi:hello_fastapi@db:5432/hello_fastapi_dev
       - SECRET_KEY=09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7
     volumes:
       - ./services/backend:/app
@@ -30,9 +32,26 @@ services:
     environment:
       - POSTGRES_USER=hello_fastapi
       - POSTGRES_PASSWORD=hello_fastapi
-      - POSTGRES_DB=hello_fastapi_dev
+      - POSTGRES_DB=hello_fastapi
     volumes:
       - postgres_data:/var/lib/postgresql/data/
 
 volumes:
   postgres_data:
+
+
+# networks:
+#   postgres_network:
+#     driver: bridge
+#     driver_opts:
+#       com.docker.network.enable_ipv6: "false"
+#     attachable: true
+#     ipam:
+#       driver: default
+#       config:
+#         - subnet: "172.28.0.0/16"
+#           gateway: "172.28.5.254"
+
+
+
+

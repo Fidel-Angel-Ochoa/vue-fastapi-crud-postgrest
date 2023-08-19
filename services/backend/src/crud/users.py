@@ -1,6 +1,9 @@
+import pytz
 from fastapi import HTTPException
 from passlib.context import CryptContext
 from tortoise.exceptions import DoesNotExist, IntegrityError
+from tortoise import timezone
+from datetime import datetime, timedelta
 
 from src.database.models import Users
 from src.schemas.users import UserOutSchema
@@ -11,10 +14,18 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated = "auto")
 
 # these functions are going to be call in another module.
 async def create_user(user)->UserOutSchema:
+    utc_now= timezone.now()
     user.password = pwd_context.encrypt(user.password)
 
     try:
-        user_obj= await Users.create(**user.dict(exclude_unset=True))
+        user_obj= await Users.create(
+            **user.dict(exclude_unset=True)
+            # username=user.username,
+            # full_name=user.full_name,
+            # password=user.password,
+            # created_at=utc_now,
+            # modified_at=utc_now
+            )
     except IntegrityError:
         raise  HTTPException(status_code=401, detail=f"Sorry, that username already exist.") # is missing explain how detect that the username already exist
     

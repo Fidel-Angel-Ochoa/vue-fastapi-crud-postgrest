@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from tortoise import Tortoise
+import os
 
 from src.database.register import register_tortoise
 from src.database.config import TORTOISE_ORM
@@ -34,3 +35,9 @@ register_tortoise(app, config=TORTOISE_ORM, generate_schemas=False)
 @app.get("/")
 def home():
     return "Hello, World!"
+
+if __name__ == "__main__":
+    # Access the PORT environment variable provided by Cloud Run
+    port = int(os.environ.get("PORT", 80))
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=port)
